@@ -124,3 +124,13 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+
+# Extra files
+*.bak
+*.exe
+*.sql
+*.zip
+.htaccess
+public/index.php
+source/.env
+source/app/Config/Database.php

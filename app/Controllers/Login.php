@@ -38,7 +38,7 @@ class Login extends BaseController
         
         // Verify user data
         $userData = $userModel->verifyData($username);
-        
+        // echo "<pre>";print_r($userData); exit;
         if ($userData) {
             $database_pass = $userData['password'];
             $authenticatePassword = password_verify($password, $database_pass);
@@ -81,7 +81,11 @@ class Login extends BaseController
     */
     public function dashboard()
     {
-        echo view('pages/front/dashboard');
+        if(session()->get('isLoggedIn')){
+            echo view('pages/front/dashboard');
+        }else{
+            echo "You Are not loged in";
+        }
     }
      /**
     * Customr succefull login
@@ -100,12 +104,12 @@ class Login extends BaseController
         $session->remove('isLoggedIn');
         
         // Set flash data for logout message
-        $session->setFlashdata('logout_message', 'You have been logged out successfully.');
+        // $session->setFlashdata('logout_message', 'You have been logged out successfully.');
 
         // Destroy the session
         $session->destroy();
         
         // Redirect to login page or any other page after logout
-        return redirect()->to('/');
+        return redirect()->to('/?logout=true');
     }
 }

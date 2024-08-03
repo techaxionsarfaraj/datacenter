@@ -4,6 +4,7 @@
 <!-- Mirrored from skote-h-light.codeigniter.themesbrand.com/auth-login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Mar 2023 03:49:55 GMT -->
 <!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
 <head>
     <meta charset="utf-8" />
     <title>Login | Data Center </title>
@@ -18,15 +19,26 @@
     <!-- Icons Css -->
     <link href="<?= base_url('assets/css/icons.min.css') ?>" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="<?= base_url('assets/css/app.min.css') ?>" id="app-style" rel="stylesheet" type="text/css" />  
+    <link href="<?= base_url('assets/css/app.min.css') ?>" id="app-style" rel="stylesheet" type="text/css" />
 </head>
 <style>
-    .form-group { position: relative;}
-    label.error { position: absolute;bottom: -21px;margin-bottom: 0;left: 0; }
-    input.error {border: 1px dotted;}
+    .form-group {
+        position: relative;
+    }
+
+    label.error {
+        position: absolute;
+        bottom: -21px;
+        margin-bottom: 0;
+        left: 0;
+    }
+
+    input.error {
+        border: 1px dotted;
+    }
 </style>
 
-<body>   
+<body>
     <div class="account-pages my-5 pt-sm-5">
         <div class="container">
             <div class="row justify-content-center">
@@ -63,35 +75,31 @@
                                     </div>
                                 </a>
                             </div>
-                            <!-- Display logout message if exists -->                            
-                            <?php if ($session->getFlashdata('logout_message')) : ?>                                
+                            <!-- Display logout message if exists -->
+                            <?php if (isset($_GET['logout']) && $_GET['logout'] == 'true') : ?>
                                 <div class="position-fixed top-0 end-0 p-3" style="z-index: 1005">
-                                    <div class="toast fade show align-items-center text-white bg-danger border-0"
-                                    role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
                                         <div class="d-flex">
                                             <div class="toast-body">
-                                                <?= session()->getFlashdata('logout_message') ?>
+                                                <?='You have been logged out successfully.'?>
                                             </div>
-                                            <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                                data-bs-dismiss="toast" aria-label="Close"></button>
+                                            <button type="button" class="btn-   close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                             <?php endif; ?>
                             <!-- Display error message if exists -->
-                            <?php if ($session->getFlashdata('message')): ?>
+                            <?php if ($session->getFlashdata('message')) : ?>
                                 <div class="position-fixed top-0 end-0 p-3" style="z-index: 1005">
-                                    <div class="toast fade show align-items-center text-white bg-danger border-0"
-                                    role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="alert-error">
                                         <div class="d-flex">
                                             <div class="toast-body">
                                                 <?= $session->getFlashdata('message') ?>
                                             </div>
-                                            <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                                data-bs-dismiss="toast" aria-label="Close"></button>
+                                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                             <?php endif ?>
                             <div class="p-2">
                                 <form class="form-horizontal" action="<?php echo base_url(); ?>/login" method="post" id="login">
@@ -175,9 +183,13 @@
     <script src="<?= base_url('assets/js/app.js') ?>"></script>
     <script>
         $().ready(function() {
-		    // validate the login form when it is submitted		    
+
+            setTimeout(function() {
+                $('#alert-error').hide();
+            }, 2500);
+            // validate the login form when it is submitted		    
             $("#login").validate({
-                rules: {                    
+                rules: {
                     username: {
                         required: true,
                         minlength: 4
@@ -185,10 +197,10 @@
                     password: {
                         required: true,
                         minlength: 5
-                    },                    
+                    },
                     remember: "required"
                 },
-                messages: {                    
+                messages: {
                     username: {
                         required: "Please enter a username",
                         minlength: "Your username must consist of at least 4 characters"
@@ -196,12 +208,13 @@
                     password: {
                         required: "Please provide a password",
                         minlength: "Your password must be at least 5 characters long"
-                    },                    
-                    remember: "Please select for remember password"                    
+                    },
+                    remember: "Please select for remember password"
                 }
             });
         });
     </script>
-    
+
 </body>
+
 </html>

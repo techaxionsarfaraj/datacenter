@@ -128,7 +128,7 @@ nb-configuration.xml
 # Extra files
 *.bak
 *.exe
-*.sql
+#*.sql
 *.zip
 .htaccess
 public/index.php

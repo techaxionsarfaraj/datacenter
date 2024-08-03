@@ -77,21 +77,21 @@
                             </div>
                             <!-- Display logout message if exists -->
                             <?php if (isset($_GET['logout']) && $_GET['logout'] == 'true') : ?>
-                                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1005">
-                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="position-fixed top-0 end-0 p-3 alert" style="z-index: 1005">
+                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" >
                                         <div class="d-flex">
                                             <div class="toast-body">
                                                 <?='You have been logged out successfully.'?>
                                             </div>
-                                            <button type="button" class="btn-   close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                         </div>
                                     </div>
                                 </div>
                             <?php endif; ?>
                             <!-- Display error message if exists -->
                             <?php if ($session->getFlashdata('message')) : ?>
-                                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1005">
-                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="alert-error">
+                                <div class="position-fixed top-0 end-0 p-3 alert" style="z-index: 1005" >
+                                    <div class="toast fade show align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" >
                                         <div class="d-flex">
                                             <div class="toast-body">
                                                 <?= $session->getFlashdata('message') ?>
@@ -182,11 +182,24 @@
     <!-- App js -->
     <script src="<?= base_url('assets/js/app.js') ?>"></script>
     <script>
-        $().ready(function() {
+        $(document).ready(function() {
 
             setTimeout(function() {
-                $('#alert-error').hide();
-            }, 2500);
+                $('.alert .toast').removeClass('show');                
+            }, 3000);
+            
+            var url = window.location.href;
+            // Check if the URL contains '?logout=true'
+            if (url.indexOf('?logout=true') !== -1) {
+                // Remove '?logout=true' from the URL
+                var newUrl = url.replace('?logout=true', '');
+
+                // Remove the trailing '?' or '&' if present
+                newUrl = newUrl.replace(/[&?]$/, '');
+
+                // Update the URL in the browser without reloading the page
+                history.replaceState(null, null, newUrl);
+            }
             // validate the login form when it is submitted		    
             $("#login").validate({
                 rules: {

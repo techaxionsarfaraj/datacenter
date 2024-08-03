@@ -17,6 +17,7 @@ class Login extends BaseController
     public function index()
     {
         echo view('pages/front/auth-login');
+        exit;
     }
 
     /**

@@ -158,7 +158,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?= base_url('addCustomer') ?>',
-                data: formData,
+                data: formData + '&status=active',
                 dataType: "JSON", 
                 //display while ajax load
                 beforeSend: function() {
@@ -167,7 +167,6 @@
                 success: function(result) {
                     setTimeout(() => {
                         $('#regenerate i').removeClass('fa-spin');
-
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
@@ -176,6 +175,12 @@
                             timer: 2500
                         });
                     }, 1500);
+                    // Reset the form
+                    $('#customerForm')[0].reset();
+
+                    // Reload or redraw the DataTable
+                    $('#customers').DataTable().ajax.reload(null, false);
+                    $('#customer').modal('hide');
                 }
             });
         });

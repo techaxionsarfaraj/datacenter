@@ -73,8 +73,34 @@ class Customer extends BaseController
     * @author Sarfaraj Sipai
     */
     public function addCustomer() {
+        $customerModel = new CustomerModel();
+        // Retrieve the posted data
         $data = $this->request->getPost();
-        
-        return json_encode($data);
+
+        $response = '';
+        if (!$customerModel->validate($data)) {
+            // If validation fails, return the errors
+            $response =[
+                'status' => $customerModel->errors(),
+                'icon' => 'error'
+            ];
+            return json_encode($response);
+        }
+
+        // Insert the data into the database
+        if ($customerModel->insert($data)) {
+            $response =[
+                'success' => 'Customer added successfully.',
+                'icon' => 'success'
+            ];
+            return json_encode($response);
+            return json_encode([]);
+        } else {
+            $response =[
+                'error' => 'Failed to add customer.',
+                'icon' => 'error'
+            ];
+            return json_encode($response);
+        }
     }
 }

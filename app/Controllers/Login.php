@@ -84,8 +84,10 @@ class Login extends BaseController
     {
         if(session()->get('isLoggedIn')){
             echo view('pages/front/dashboard');
+            // return redirect()->to('pages/front/dashboard');
         }else{
-            echo "You Are not loged in";
+            // echo "You Are not loged in";
+            return redirect()->to('/');
         }
     }
      /**
